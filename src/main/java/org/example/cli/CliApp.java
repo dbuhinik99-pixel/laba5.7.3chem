@@ -1,5 +1,5 @@
 package org.example.cli;
-
+// хайп
 import org.example.command.*;
 import org.example.IdGenerator;
 import org.example.service.impl.ComponentService;
