@@ -7,7 +7,7 @@ import org.example.service.SolutionSer;
 
 import java.util.*;
 
-public class SolutionService implements SolutionSer { // implements
+public class SolutionService implements SolutionSer {
     private final Map<Long, Solution> solutions = new LinkedHashMap<>();
     private final IdGenerator idGenerator;
     private static final String ENTITY_NAME = "solution";
@@ -56,6 +56,11 @@ public class SolutionService implements SolutionSer { // implements
             }
         }
         return result;
+    }
+
+    @Override
+    public Map<Long, Solution> getAllAsMap() {
+        return new LinkedHashMap<>(solutions);
     }
 
     @Override

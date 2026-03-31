@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.controllers.MainController">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <MenuBar>
+        <Menu text="Файл">
+            <MenuItem text="Сохранить" onAction="#handleSave"/>
+            <MenuItem text="Обновить" onAction="#handleRefresh"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Выход" onAction="#handleExit"/>
+        </Menu>
+        <Menu text="Растворы">
+            <MenuItem text="Добавить" onAction="#handleAddSolution"/>
+            <MenuItem text="Редактировать" onAction="#handleEditSolution"/>
+            <MenuItem text="Удалить" onAction="#handleDeleteSolution"/>
+        </Menu>
+        <Menu text="Приготовления">
+            <MenuItem text="Добавить" onAction="#handleAddPreparation"/>
+            <MenuItem text="Редактировать" onAction="#handleEditPreparation"/>
+            <MenuItem text="Удалить" onAction="#handleDeletePreparation"/>
+        </Menu>
+    </MenuBar>
+
+    <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
+        <VBox spacing="5">
+            <Label text="Растворы" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="solutionTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colName" text="Название" prefWidth="250"/>
+                    <TableColumn fx:id="colConcentration" text="Концентрация" prefWidth="100"/>
+                    <TableColumn fx:id="colUnit" text="Ед." prefWidth="60"/>
+                    <TableColumn fx:id="colSolvent" text="Растворитель" prefWidth="150"/>
+                </columns>
+            </TableView>
+            <HBox spacing="5">
+                <Button text="Добавить" onAction="#handleAddSolution"/>
+                <Button text="Редактировать" onAction="#handleEditSolution"/>
+                <Button text="Удалить" onAction="#handleDeleteSolution"/>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Приготовления" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="preparationTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="prepColId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="prepColQuantity" text="Количество" prefWidth="100"/>
+                    <TableColumn fx:id="prepColUnit" text="Ед." prefWidth="60"/>
+                    <TableColumn fx:id="prepColComment" text="Комментарий" prefWidth="250"/>
+                    <TableColumn fx:id="prepColTime" text="Время" prefWidth="150"/>
+                </columns>
+            </TableView>
+            <HBox spacing="5">
+                <Button text="Добавить" onAction="#handleAddPreparation"/>
+                <Button text="Редактировать" onAction="#handleEditPreparation"/>
+                <Button text="Удалить" onAction="#handleDeletePreparation"/>
+            </HBox>
+        </VBox>
+    </SplitPane>
+
+    <ToolBar>
+        <Button text="Обновить" onAction="#handleRefresh"/>
+        <Button text="Сохранить" onAction="#handleSave"/>
+        <Label fx:id="lblStatus" text="Готово" HBox.hgrow="ALWAYS"/>
+    </ToolBar>
+</VBox>

@@ -1,5 +1,7 @@
 package org.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Set;
 
 public enum SolutionConcentrationUnit {
@@ -13,21 +15,20 @@ public enum SolutionConcentrationUnit {
         this.validStrings = validStrings;
     }
 
+    @JsonCreator
     public static SolutionConcentrationUnit fromString(String str) {
         if (str == null) return null;
-
         str = str.trim().toLowerCase();
-
         for (SolutionConcentrationUnit unit : values()) {
             if (unit.validStrings.contains(str)) {
                 return unit;
             }
         }
-
         System.out.println("Ошибка: доступны только проценты (%, percent), моль/л (mol/l, mol_per_l) или г/л (g/l, g_per_l)");
         return null;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return switch (this) {

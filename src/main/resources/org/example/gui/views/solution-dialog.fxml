@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.controllers.SolutionDialogController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Название:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="txtName" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="300"/>
+
+    <Label text="Концентрация:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="txtConcentration" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Единицы:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="cbUnit" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Растворитель:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="txtSolvent" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <HBox spacing="10" GridPane.rowIndex="4" GridPane.columnIndex="1">
+        <Button text="OK" onAction="#handleOk"/>
+        <Button text="Отмена" onAction="#handleCancel"/>
+    </HBox>
+</GridPane>

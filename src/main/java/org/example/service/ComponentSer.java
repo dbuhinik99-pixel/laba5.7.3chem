@@ -31,4 +31,6 @@ public interface ComponentSer {
     Collection<PreparationComponent> getAll();
 
     void remove(long id);
+
+    Map<Long, PreparationComponent> getAllAsMap();
 }

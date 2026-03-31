@@ -35,4 +35,6 @@ public interface PreparationSer {
     void clearAll();
 
     Collection<Preparation> getAll();
+
+    Map<Long, Preparation> getAllAsMap();
 }

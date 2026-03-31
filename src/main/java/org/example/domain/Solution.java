@@ -1,24 +1,36 @@
 package org.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 
 public final class Solution {
-    private long id; // идентификатор раствора
+    private long id;
     private String name;
     private double concentration;
-    private SolutionConcentrationUnit concentrationUnit; // единицы измерения концентрации
-    private String solvent; // растворитель
-    private final String ownerUsername; // кто приготовил
-    private final Instant createdAt; // когда приготовил
-    private Instant updatedAt; // время обновления записи
+    private SolutionConcentrationUnit concentrationUnit;
+    private String solvent;
+    private final String ownerUsername;
+    private final Instant createdAt;
+    private Instant updatedAt;
 
-    public Solution(String name, double concentration,
-                    SolutionConcentrationUnit concentrationUnit,
-                    String solvent, String ownerUsername) {
+    // Конструктор без параметров для Jackson
+    public Solution() {
+        this.ownerUsername = "SYSTEM";
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @JsonCreator
+    public Solution(@JsonProperty("name") String name,
+                    @JsonProperty("concentration") double concentration,
+                    @JsonProperty("concentrationUnit") SolutionConcentrationUnit concentrationUnit,
+                    @JsonProperty("solvent") String solvent,
+                    @JsonProperty("ownerUsername") String ownerUsername) {
         setName(name);
         setConcentration(concentration);
         setConcentrationUnit(concentrationUnit);
-        setSolvent(solvent); // сеттеры (методы для установки значений)
+        setSolvent(solvent);
         this.ownerUsername = ownerUsername == null ? "SYSTEM" : ownerUsername;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();

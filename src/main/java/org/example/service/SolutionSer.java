@@ -18,6 +18,8 @@ public interface SolutionSer {
 
     List<Solution> searchByName(String query);
 
+    Map<Long, Solution> getAllAsMap();
+
     boolean exists(long id);
 
     void loadFromData(Map<Long, Solution> loadedSolutions);

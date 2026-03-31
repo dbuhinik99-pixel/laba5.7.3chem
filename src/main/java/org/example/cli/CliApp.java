@@ -5,6 +5,7 @@ import org.example.IdGenerator;
 import org.example.service.impl.ComponentService;
 import org.example.service.impl.PreparationService;
 import org.example.service.impl.SolutionService;
+import org.example.storage.StorageManager;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,7 @@ public class CliApp {
     private final SolutionService solutionService;
     private final PreparationService preparationService;
     private final ComponentService componentService;
+    private final StorageManager storageManager;
     private final Scanner scanner;
     private boolean running = true;
     private final DateTimeFormatter timeFormatter =
@@ -24,17 +26,25 @@ public class CliApp {
     private final Map<String, Command> commands = new HashMap<>();
 
     public CliApp() {
-        IdGenerator idGenerator = new IdGenerator();
+        IdGenerator idGenerator = new IdGenerator();  // создаем idGenerator
         this.solutionService = new SolutionService(idGenerator);
         this.preparationService = new PreparationService(solutionService, idGenerator);
         this.componentService = new ComponentService(preparationService, idGenerator);
-        this.scanner = new Scanner(System.in);
 
+        // Инициализация менеджера сохранения - передаем ВСЕ 4 параметра
+        this.storageManager = new StorageManager(solutionService, preparationService, componentService, idGenerator);
+
+        // Загрузка данных из файла при старте
+        storageManager.loadData();
+
+        this.scanner = new Scanner(System.in);
         initializeCommands();
+
+        // Добавляем команду save
+        commands.put("save", new SaveCommand(solutionService, preparationService, componentService, scanner, timeFormatter, storageManager));
     }
 
     private void initializeCommands() {
-        // Все команды получают одни и те же зависимости
         commands.put("help", new HelpCommand(solutionService, preparationService, componentService, scanner, timeFormatter));
         commands.put("exit", new ExitCommand(solutionService, preparationService, componentService, scanner, timeFormatter));
         commands.put("sol_create", new SolCreateCommand(solutionService, preparationService, componentService, scanner, timeFormatter));
@@ -52,6 +62,8 @@ public class CliApp {
     public void start() {
         System.out.println("Система учета растворов");
         System.out.println("Введите 'help' для списка команд");
+        System.out.println("Данные автоматически сохраняются при выходе");
+        System.out.println("Для ручного сохранения используйте команду 'save'");
 
         while (running) {
             try {
@@ -68,8 +80,9 @@ public class CliApp {
                 if (command != null) {
                     command.execute(args);
 
-                    // Для exit команды
                     if (commandName.equals("exit")) {
+                        // Сохраняем данные перед выходом
+                        storageManager.saveData();
                         running = false;
                     }
                 } else {

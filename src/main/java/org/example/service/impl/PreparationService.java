@@ -9,13 +9,13 @@ import org.example.service.SolutionSer;
 import java.time.Instant;
 import java.util.*;
 
-public class PreparationService implements PreparationSer { // implements
+public class PreparationService implements PreparationSer {
     private final Map<Long, Preparation> preparations = new LinkedHashMap<>();
     private final IdGenerator idGenerator;
-    private final SolutionSer solutionService; // тип изменен на интерфейс
+    private final SolutionSer solutionService;
     private static final String ENTITY_NAME = "preparation";
 
-    public PreparationService(SolutionSer solutionService, IdGenerator idGenerator) { // параметр изменен
+    public PreparationService(SolutionSer solutionService, IdGenerator idGenerator) {
         this.solutionService = solutionService;
         this.idGenerator = idGenerator;
     }
@@ -46,7 +46,7 @@ public class PreparationService implements PreparationSer { // implements
     @Override
     public List<Preparation> getBySolutionId(long solutionId) {
         if (!solutionService.exists(solutionId)) {
-            throw new IllegalArgumentException("Ошибка: раствор с id " + solutionId + " не найдено");
+            throw new IllegalArgumentException("Ошибка: раствор с id " + solutionId + " не найден");
         }
 
         List<Preparation> result = new ArrayList<>();
@@ -92,6 +92,7 @@ public class PreparationService implements PreparationSer { // implements
     public boolean exists(long id) {
         return preparations.containsKey(id);
     }
+
     @Override
     public int countBySolutionId(long solutionId) {
         int count = 0;
@@ -129,5 +130,10 @@ public class PreparationService implements PreparationSer { // implements
     @Override
     public Collection<Preparation> getAll() {
         return preparations.values();
+    }
+
+    @Override
+    public Map<Long, Preparation> getAllAsMap() {
+        return new LinkedHashMap<>(preparations);
     }
 }

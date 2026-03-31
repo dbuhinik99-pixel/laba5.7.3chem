@@ -1,21 +1,31 @@
 package org.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 
 public final class PreparationComponent {
-    private long id; // идентификатор компонента
-    private long preparationId; // ID приготовления, к которому относится данный компонент. Это внешний ключ — ссылка на существующий объект Preparation.
-    private long batchId; // ID партии реактива
-    private double quantity; // количество компонента, использованного в приготовлении
-    private Units unit; // единицы измерения количества
-    private final Instant createdAt; // время создания записи о компоненте
+    private long id;
+    private long preparationId;
+    private long batchId;
+    private double quantity;
+    private Units unit;
+    private final Instant createdAt;
 
-    public PreparationComponent(long preparationId, long batchId,
-                                double quantity, Units unit) {
+    // Конструктор без параметров для Jackson
+    public PreparationComponent() {
+        this.createdAt = Instant.now();
+    }
+
+    @JsonCreator
+    public PreparationComponent(@JsonProperty("preparationId") long preparationId,
+                                @JsonProperty("batchId") long batchId,
+                                @JsonProperty("quantity") double quantity,
+                                @JsonProperty("unit") Units unit) {
         setPreparationId(preparationId);
         setBatchId(batchId);
         setQuantity(quantity);
-        setUnits(unit); // сеттеры (методы для установки значений)
+        setUnits(unit);
         this.createdAt = Instant.now();
     }
 
@@ -55,4 +65,4 @@ public final class PreparationComponent {
     public double getQuantity() { return quantity; }
     public Units getUnit() { return unit; }
     public Instant getCreatedAt() { return createdAt; }
-} // геттеры для возвращения значения полей и сеттер для присваивания ID в конце всех операций
+}

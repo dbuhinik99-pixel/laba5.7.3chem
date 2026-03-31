@@ -8,13 +8,13 @@ import org.example.service.PreparationSer;
 
 import java.util.*;
 
-public class ComponentService implements ComponentSer { // implements
+public class ComponentService implements ComponentSer {
     private final Map<Long, PreparationComponent> components = new LinkedHashMap<>();
     private final IdGenerator idGenerator;
-    private final PreparationSer preparationService; // тип изменен на интерфейс
+    private final PreparationSer preparationService;
     private static final String ENTITY_NAME = "component";
 
-    public ComponentService(PreparationSer preparationService, IdGenerator idGenerator) { // параметр изменен
+    public ComponentService(PreparationSer preparationService, IdGenerator idGenerator) {
         this.preparationService = preparationService;
         this.idGenerator = idGenerator;
     }
@@ -68,6 +68,7 @@ public class ComponentService implements ComponentSer { // implements
         }
         return count;
     }
+
     @Override
     public boolean exists(long id) {
         return components.containsKey(id);
@@ -118,5 +119,10 @@ public class ComponentService implements ComponentSer { // implements
             throw new IllegalArgumentException("Ошибка: компонент с id " + id + " не найден");
         }
         components.remove(id);
+    }
+
+    @Override
+    public Map<Long, PreparationComponent> getAllAsMap() {
+        return new LinkedHashMap<>(components);
     }
 }

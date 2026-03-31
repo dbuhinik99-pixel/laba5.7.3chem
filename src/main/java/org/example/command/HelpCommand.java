@@ -31,8 +31,11 @@ public class HelpCommand extends BaseCommand {
             comp_list <id_приготовления>     - список компонентов
             prep_update <id> field=value ... - обновить приготовление
             prep_delete <id>                 - удалить приготовление
+            save                           - сохранить данные в файл
             help                           - справка
-            exit                           - выход
+            exit                           - выход (автосохранение)
+            
+            Данные автоматически сохраняются в файл data.json при выходе
             """);
     }
 }

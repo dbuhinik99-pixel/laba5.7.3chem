@@ -1,5 +1,7 @@
 package org.example.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Set;
 
 public enum Units {
@@ -12,6 +14,7 @@ public enum Units {
         this.validStrings = validStrings;
     }
 
+    @JsonCreator
     public static Units fromString(String str) {
         if (str == null) return null;
 
@@ -27,6 +30,7 @@ public enum Units {
         return null;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return this == ML ? "mL" : "g";
